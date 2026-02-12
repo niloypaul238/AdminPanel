@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+:root {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(2, 2, 2, 0.87);
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* flex items-center p-2 rounded hover:bg- hover:text-white  gap-x-2 ${toggle == "/" && "text-[#FF0AB1]"}` */
+.slideNabBtn{
+  display: flex;
+  gap: 0px 5px;
+  padding: 3px;
+  transition: .3s ease;
+  border-radius: 5px;
+}
+.slideNabBtn:hover{
+  background-color:#ff0ab169;
+  color: white;
+}
+.scrollBar::-webkit-scrollbar{
+  overflow: hidden;
+  overflow-y: hidden;
+}
