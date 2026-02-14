@@ -1,9 +1,24 @@
 import { Download, Pencil, Trash } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { CiFilter } from 'react-icons/ci';
 import { userData } from '../../../public/data';
+import { Link } from 'react-router';
 
 const AdminAgencies = () => {
+    const [findObj, setFindObj] = useState(userData)
+    const [inputValue, setInputValue] = useState("")
+    const [notFoundData, setNotFoundData] = useState('');
+    const searchData = () => {
+        const inputLower = inputValue.toLocaleLowerCase()
+        const filterData = inputLower !== "" ? hostAgencyData.filter(item => item.agencyName.toLocaleLowerCase() == inputLower || item.agencyID.toLocaleLowerCase() === inputLower) : hostAgencyData;
+        setFindObj(filterData);
+        // console.log(filterData);
+        if (!filterData.length > 0 && inputValue !== "") {
+            setNotFoundData('Not Found Data')
+        } else {
+            setNotFoundData('')
+        }
+    }
 
     return (
         <div className='py-6 min-h-screen'>
@@ -13,13 +28,16 @@ const AdminAgencies = () => {
                         <h1 className='text-2xl font-semibold'>Admin Agency</h1>
                         <p className='mb-5'>Manage all user records and profiles</p>
                     </div>
-                    <button className='flex bg-[#074DFF]/80 gap-x-2 text-white px-2 py-1 rounded'><Download className='w-5'/>Export Data</button>
+                    <button className='flex bg-[#074DFF]/80 gap-x-2 text-white px-2 py-1 rounded'><Download className='w-5' />Export Data</button>
                 </div>
                 <div className="flex justify-between gap-x-1.5 items-center mb-6">
                     <input type="text" placeholder='Search by agency ID or name' className='sm:basis-3/4 border w-full border-gray-500/30 px-2 py-1 rounded' />
-                    <div className="flex sm:basis-1/4 gap-2">
-                        <button className="px-3 py-1.5 cursor-pointer rounded text-sm flex items-center gap-x-2 border border-gray-500/30"><CiFilter className='text-lg' />Filter</button>
-                        <button className="px-3 py-1 text-white  border-gray-500/30 rounded text-sm bg-linear-to-r from-[#FF44E3]/60 to-[#294599]/40 cursor-pointer">Add Agancy</button>
+                    <div className="flex justify-between gap-x-1.5 items-center mb-6">
+                        <input onChange={(e) => setInputValue(e.target.value)} value={inputValue} type="text" placeholder='Search by agency ID or name' className='sm:basis-9/12 border w-full border-gray-500/30 px-2 py-1 rounded' />
+                        <div className="flex sm:basis-3/12 gap-2">
+                            <button onClick={searchData} className="px-3 py-1.5 w-full cursor-pointer rounded justify-center text-sm flex items-center gap-x-2 border border-gray-500/30"><CiFilter className='text-lg' />Filter</button>
+                            <Link to={"/HostAgency/AddHostAgency"} className="px-3 flex justify-center items-center py-1 w-full text-white  border-gray-500/30 rounded text-sm bg-linear-to-r from-[#FF44E3]/60 to-[#294599]/40 cursor-pointer">Add Agancy</Link>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,7 +61,7 @@ const AdminAgencies = () => {
                     <tbody className=''>
                         {userData.map((user) => (
                             <tr key={user.userID}
-                                className="border-b w-full border-gray-500/30 text-sm  hover:bg-gray-100 transition">
+                                className="border-b w-full border-gray-500/30   hover:bg-gray-100 transition">
                                 <td className="px-1 font-semibold">
                                     {user.userID}
                                 </td>

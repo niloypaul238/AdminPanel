@@ -19,7 +19,7 @@ const LiveStrem = () => {
 
     const searchData = () => {
         const inputLower = inputValue.toLocaleLowerCase()
-        const filterData = inputLower !== "" ? findObj.filter(item => item.name.toLocaleLowerCase() == inputLower) : streamUsers;
+        const filterData = inputLower !== "" ? findObj.filter(item => item.name.toLocaleLowerCase() == inputLower || item.userID.toLocaleLowerCase() == inputLower) : streamUsers;
         setFindObj(filterData);
         // console.log(filterData);
         if (!filterData.length > 0 && inputValue != "") {
@@ -62,6 +62,17 @@ const LiveStrem = () => {
         });
     }
 
+
+
+
+    const itemsPerPage = 8;
+    const [currentPage, setCurrentPage] = useState(1);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = findObj.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(findObj.length / itemsPerPage);
+
+
     return (
         <div className='py-6 min-h-screen'>
             <div>
@@ -102,7 +113,7 @@ const LiveStrem = () => {
                     </thead>
 
                     <tbody className=''>
-                        {findObj.map((user) => (
+                        {currentItems.map((user) => (
                             <tr
                                 key={user.userID}
                                 className="border-b w-full border-gray-500/30  hover:bg-gray-100 transition"
@@ -142,6 +153,38 @@ const LiveStrem = () => {
                     </tbody>
                 </table>
                 <div><p className='text-center text-gray-600 text-2xl'>{notFoundData}</p></div>
+
+                {/* pagination section */}
+                <div className=' flex justify-center'>
+                    <div style={{ marginTop: "10px" }}>
+                        <button className='cursor-pointer text-pink-500'
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                        >
+                            Prev
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <button className={` px-2 cursor-pointer ${currentPage === i + 1 ? "bg-pink-500":""} ${currentPage === i + 1 ? "text-white" : "text-black"}`}
+                                key={i}
+                                onClick={() => setCurrentPage(i + 1)}
+                                style={{ 
+                                    margin: "0 8px",
+                                    
+                                }}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+
+                        <button className='cursor-pointer text-pink-500'
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

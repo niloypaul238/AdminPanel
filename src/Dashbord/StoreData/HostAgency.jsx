@@ -28,6 +28,14 @@ const HostAgency = () => {
     }
 
 
+    const itemsPerPage = 5;
+    const [currentPage, setCurrentPage] = useState(1);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = findObj.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(findObj.length / itemsPerPage);
+
+
     return (
         <div className='py-6 min-h-screen'>
             <div>
@@ -58,7 +66,7 @@ const HostAgency = () => {
                     </thead>
 
                     <tbody className=''>
-                        {findObj.map((user,index) => (
+                        {currentItems.map((user, index) => (
                             <tr key={user.agencyID}
                                 className="border-b w-full border-gray-500/30 text-md  hover:bg-gray-100 transition">
                                 <td className="px-1 font-semibold">
@@ -92,6 +100,37 @@ const HostAgency = () => {
                     </tbody>
                 </table>
                 <div><p className='text-center text-gray-600 text-2xl'>{notFoundData}</p></div>
+                {/* pagination section */}
+                <div className=' flex justify-center'>
+                    <div style={{ marginTop: "10px" }}>
+                        <button className='cursor-pointer text-pink-500'
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                        >
+                            Prev
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <button className={` px-2 cursor-pointer ${currentPage === i + 1 ? "bg-pink-500" : ""} ${currentPage === i + 1 ? "text-white" : "text-black"}`}
+                                key={i}
+                                onClick={() => setCurrentPage(i + 1)}
+                                style={{
+                                    margin: "0 8px",
+
+                                }}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+
+                        <button className='cursor-pointer text-pink-500'
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

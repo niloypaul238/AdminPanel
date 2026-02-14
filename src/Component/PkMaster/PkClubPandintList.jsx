@@ -8,11 +8,12 @@ import { ContexCreate } from '../../ContexAPI';
 import { PKstreamRequests } from '../../../public/data';
 
 const PkClubPandintList = () => {
-    const {PKstreamRequestsdata,setPKstreamRequestsdata} = useContext(ContexCreate)
+    const { PKstreamRequestsdata } = useContext(ContexCreate)
     let [inputValue, setInputValue] = useState("")
     const [notFoundData, setNotFoundData] = useState('');
     const [findObj, setFindObj] = useState(PKstreamRequestsdata)
-    
+
+
 
     const searchData = () => {
         const inputLower = inputValue.toLocaleLowerCase()
@@ -69,7 +70,7 @@ const PkClubPandintList = () => {
                                 <span>{filterData.location}</span>
                             </div>
 
-                            
+
                         </div>
                     </div>
                 </div>
@@ -78,6 +79,16 @@ const PkClubPandintList = () => {
             width: 500
         });
     }
+
+    const itemsPerPage = 5;
+    const [currentPage, setCurrentPage] = useState(1);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = findObj.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(findObj.length / itemsPerPage);
+
+
+
     return (
         <div>
             <div>
@@ -109,7 +120,7 @@ const PkClubPandintList = () => {
                         </thead>
 
                         <tbody className="divide-y">
-                            {findObj.map((item) => (
+                            {currentItems.map((item) => (
                                 <tr key={item.id} className="hover:bg-gray-50 border-b border-gray-400/40">
                                     <td className="px-2 py-1 font-medium">{item.userId}</td>
 
@@ -153,8 +164,8 @@ const PkClubPandintList = () => {
 
                                     <td className="px-2 py-1">
                                         <div className="flex items-center justify-center gap-3">
-                                            <Eye onClick={()=>model(item.id)} className="w-5 h-5 text-gray-600 cursor-pointer" />
-                                            <Link to={`${item.userId}`}><Pencil className="w-5 h-5 text-red-500 cursor-pointer" /></Link> 
+                                            <Eye onClick={() => model(item.id)} className="w-5 h-5 text-gray-600 cursor-pointer" />
+                                            <Link to={`${item.userId}`}><Pencil className="w-5 h-5 text-red-500 cursor-pointer" /></Link>
                                         </div>
                                     </td>
                                 </tr>
@@ -162,6 +173,37 @@ const PkClubPandintList = () => {
                         </tbody>
                     </table>
                     <div><p className='text-center text-gray-600 text-2xl'>{notFoundData}</p></div>
+                    {/* pagination section */}
+                    <div className=' flex justify-center'>
+                        <div style={{ marginTop: "10px" }}>
+                            <button className='cursor-pointer text-pink-500'
+                                disabled={currentPage === 1}
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                            >
+                                Prev
+                            </button>
+
+                            {Array.from({ length: totalPages }, (_, i) => (
+                                <button className={` px-2 cursor-pointer ${currentPage === i + 1 ? "bg-pink-500" : ""} ${currentPage === i + 1 ? "text-white" : "text-black"}`}
+                                    key={i}
+                                    onClick={() => setCurrentPage(i + 1)}
+                                    style={{
+                                        margin: "0 8px",
+
+                                    }}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+
+                            <button className='cursor-pointer text-pink-500'
+                                disabled={currentPage === totalPages}
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
             </div>

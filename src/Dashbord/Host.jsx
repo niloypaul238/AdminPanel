@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 const Host = () => {
 
-    let [inputValue,setInputValue] = useState("")
+    let [inputValue, setInputValue] = useState("")
 
     const users = [
         {
@@ -183,8 +183,8 @@ const Host = () => {
         },
     ];
 
-    const [findObj,setFindObj] = useState(users)
-    const [notFoundData,setNotFoundData] = useState('');
+    const [findObj, setFindObj] = useState(users)
+    const [notFoundData, setNotFoundData] = useState('');
 
     const model = (e) => {
 
@@ -230,17 +230,26 @@ const Host = () => {
     }
 
 
-    const searchData = () =>{
+    const searchData = () => {
         const inputLower = inputValue.toLocaleLowerCase()
         const filterData = inputLower !== "" ? users?.filter(item => item.userId.toLocaleLowerCase() === inputLower || item.name.toLocaleLowerCase() === inputLower) : users;
-       setFindObj(filterData);
-       console.log(filterData);
-       if(!filterData.length > 0 && inputValue != ""){
-        setNotFoundData('Not Found Data')
-       }else{
-        setNotFoundData('')
-       }
+        setFindObj(filterData);
+        console.log(filterData);
+        if (!filterData.length > 0 && inputValue != "") {
+            setNotFoundData('Not Found Data')
+        } else {
+            setNotFoundData('')
+        }
     }
+
+
+
+    const itemsPerPage = 8;
+    const [currentPage, setCurrentPage] = useState(1);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = findObj.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(findObj.length / itemsPerPage);
 
 
     return (
@@ -254,11 +263,11 @@ const Host = () => {
                 <StatCard title="Platform Revenue" bg="bg-gradient-to-t from-[#E13913]  to-[#30ACFF]" icon={<GrLineChart />} value="৳2.4M" extra="+18%" />
             </div>
 
-            <div className="flex justify-between items-center mb-4">
-                <input onChange={(e)=>setInputValue(e.target.value)} value={inputValue} type="text" placeholder='Search by  ID or name' className='sm:basis-4/5 border w-full border-gray-600/40 px-2 py-1 rounded' />
-                <div className="flex gap-2">
-                    <button  className="px-3 py-1 border rounded text-sm">Export Data</button>
-                    <button onClick={()=>searchData()} className="px-3 py-1  rounded text-sm flex items-center gap-x-2 bg-linear-to-r text-white from-indigo-500  to-pink-400"><CiFilter className='text-lg' />Filter</button>
+            <div className="flex justify-between items-center gap-2 mb-4">
+                <input onChange={(e) => setInputValue(e.target.value)} value={inputValue} type="text" placeholder='Search by  ID or name' className='sm:basis-8/12 border w-full border-gray-600/40 px-2 py-1 rounded' />
+                <div className="flex sm:basis-4/12 gap-2">
+                    <button className="px-3 py-1 w-full border cursor-not-allowed rounded text-sm">Export Data</button>
+                    <button onClick={() => searchData()} className="px-3 py-1  rounded text-sm flex items-center gap-x-2 bg-linear-to-r text-white from-indigo-500 cursor-pointer w-full justify-center to-pink-400"><CiFilter className='text-lg' />Filter</button>
                 </div>
             </div>
 
@@ -279,51 +288,83 @@ const Host = () => {
                     </thead>
 
                     <tbody >
-                        {    
-                            
-                        findObj.map((user) => (
-                            <tr
-                                key={user.id}
-                                className="border-b border-gray-500/30  hover:bg-gray-100 transition"
-                            >
-                                <td className="p-2 font-medium">{user.userId}</td>
-                                <td>{user.name}</td>
+                        {
 
-                                <td>
-                                    <span
-                                        className={`px-2 py-0.5 rounded-full text-xs font-medium ${user.levelColor}`}
-                                    >
-                                        {user.level}
-                                    </span>
-                                </td>
+                            currentItems.map((user) => (
+                                <tr
+                                    key={user.id}
+                                    className="border-b border-gray-500/30  hover:bg-gray-100 transition"
+                                >
+                                    <td className="p-2 font-medium">{user.userId}</td>
+                                    <td>{user.name}</td>
 
-                                <td>
-                                    <span
-                                        className={`px-2 py-0.5 rounded-full text-xs font-medium ${user.crownColor}`}
-                                    >
-                                        {user.crown}
-                                    </span>
-                                </td>
+                                    <td>
+                                        <span
+                                            className={`px-2 py-0.5 rounded-full text-xs font-medium ${user.levelColor}`}
+                                        >
+                                            {user.level}
+                                        </span>
+                                    </td>
 
-                                <td>{user.diamonds}</td>
-                                <td>{user.beans}</td>
-                                <td>{user.location}</td>
+                                    <td>
+                                        <span
+                                            className={`px-2 py-0.5 rounded-full text-xs font-medium ${user.crownColor}`}
+                                        >
+                                            {user.crown}
+                                        </span>
+                                    </td>
 
-                                <td>
-                                    <span className={`px-2 py-0.5 rounded-full text-xs ${user.status == "Active" ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`}>
-                                        {user.status}
-                                    </span>
-                                </td>
+                                    <td>{user.diamonds}</td>
+                                    <td>{user.beans}</td>
+                                    <td>{user.location}</td>
 
-                                <td className="flex items-center justify-center gap-3 py-2">
-                                    <IoEyeOutline onClick={() => model(user.id)} className="w-5 h-5 text-gray-600 cursor-pointer" />
-                                    <HiOutlineDotsHorizontal className="w-5 h-5 text-gray-600 cursor-pointer" />
-                                </td>
-                            </tr>
-                        ))}
+                                    <td>
+                                        <span className={`px-2 py-0.5 rounded-full text-xs ${user.status == "Active" ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`}>
+                                            {user.status}
+                                        </span>
+                                    </td>
+
+                                    <td className="flex items-center justify-center gap-3 py-2">
+                                        <IoEyeOutline onClick={() => model(user.id)} className="w-5 h-5 text-gray-600 cursor-pointer" />
+                                        <HiOutlineDotsHorizontal className="w-5 h-5 text-gray-600 cursor-pointer" />
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
                 <div><p className='text-center text-gray-600 text-2xl'>{notFoundData}</p></div>
+
+                {/* pagination section */}
+                <div className=' flex justify-center'>
+                    <div style={{ marginTop: "10px" }}>
+                        <button className='cursor-pointer text-pink-500'
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                        >
+                            Prev
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <button className={` px-2 cursor-pointer ${currentPage === i + 1 ? "bg-pink-500" : ""} ${currentPage === i + 1 ? "text-white" : "text-black"}`}
+                                key={i}
+                                onClick={() => setCurrentPage(i + 1)}
+                                style={{
+                                    margin: "0 8px",
+
+                                }}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+
+                        <button className='cursor-pointer text-pink-500'
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 

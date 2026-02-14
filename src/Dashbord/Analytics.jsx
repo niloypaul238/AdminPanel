@@ -18,7 +18,7 @@ const Analytics = () => {
 
     const searchData = () => {
         const inputLower = inputValue.toLocaleLowerCase()
-        const filterData = inputLower !== "" ? findObj.filter(item => item.agency.toLocaleLowerCase() == inputLower) : streamers;
+        const filterData = inputLower !== "" ? findObj.filter(item => item.agency.toLocaleLowerCase() == inputLower || item.userId.toLocaleLowerCase() == inputLower) : streamers;
         setFindObj(filterData);
         // console.log(filterData);
         if (!filterData.length > 0 && inputValue != "") {

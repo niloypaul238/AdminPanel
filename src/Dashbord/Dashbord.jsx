@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StatCard from '../Component/StatCard';
 import LiveCard from '../Component/LiveCard ';
 import { TbUsers } from 'react-icons/tb';
@@ -7,44 +7,17 @@ import { HiDotsHorizontal, HiOutlineFolderOpen } from 'react-icons/hi';
 import { GrLineChart } from 'react-icons/gr';
 import { CiFilter } from 'react-icons/ci';
 import Swal from 'sweetalert2';
+import { agenciesDashbord } from '../../public/data';
 
 const Dashbord = () => {
-    const agencies = [
-        {
-            id: "0012300",
-            name: "StartHost",
-            type: "HQ",
-            level: "Lv1",
-            diamonds: "100M",
-            beans: "100K",
-            coinSell: "100K",
-            location: "Bangladesh",
-        },
-        {
-            id: "00122301",
-            name: "Elite Bro",
-            type: "US",
-            level: "Lv3",
-            diamonds: "100K",
-            beans: "100K",
-            coinSell: "100M",
-            location: "Bangladesh",
-        },
-        {
-            id: "001",
-            name: "Premium",
-            type: "MG",
-            level: "Lv2",
-            diamonds: "100M",
-            beans: "100K",
-            coinSell: "100M",
-            location: "Bangladesh",
-        },
-    ];
+    let [inputValue,setInputValue] = useState("")
+        const [findObj,setFindObj] = useState(agenciesDashbord)
+        const [notFoundData,setNotFoundData] = useState('');
+    
 
     const model = (e) => {
 
-        const filterData = agencies.find(item => item.id === e)
+        const filterData = agenciesDashbord.find(item => item.id === e)
         console.log(filterData);
         Swal.fire({
             html: `
@@ -76,6 +49,18 @@ const Dashbord = () => {
 
 
     }
+
+     const searchData = () =>{
+        const inputLower = inputValue.toLocaleLowerCase()
+        const filterData = inputLower !== "" ? agenciesDashbord?.filter(item => item.id.toLocaleLowerCase() === inputLower || item.name.toLocaleLowerCase() === inputLower) : agenciesDashbord;
+       setFindObj(filterData);
+    //    console.log(filterData);
+       if(!filterData.length > 0 && inputValue != ""){
+        setNotFoundData('Not Found Data')
+       }else{
+        setNotFoundData('')
+       }
+    }
     return (
         <div className="py-6 min-h-screen ">
             {/* Top Stats */}
@@ -100,11 +85,14 @@ const Dashbord = () => {
 
             {/* Agencies Overview */}
             <div className="bg-white rounded-xl p-5 shadow">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-col mb-4">
                     <h2 className="font-semibold">Agencies Overview</h2>
-                    <div className="flex gap-2">
-                        <button className="px-3 py-1 cursor-pointer border rounded text-sm">Export Data</button>
-                        <button className="px-3 py-1 cursor-pointer rounded text-sm flex items-center gap-x-2 bg-linear-to-r text-white from-indigo-500  to-pink-400"><CiFilter className='text-lg' />Filter</button>
+                    <div className="flex w-full justify-between gap-x-2 items-center mb-4">
+                        <input onChange={(e) => setInputValue(e.target.value)} value={inputValue} type="text" placeholder='Search by  ID or name' className='sm:basis-8/12 border w-full border-gray-600/40 px-2 py-1 rounded' />
+                        <div className="flex sm:basis-4/12 gap-2">
+                            <button className="px-3 w-full flex justify-center items-center py-1 border rounded text-sm cursor-not-allowed">Export Data</button>
+                            <button onClick={() => searchData()} className="px-3 py-1  w-full rounded text-sm flex items-center justify-center gap-x-2 bg-linear-to-r text-white from-indigo-500 cursor-pointer to-pink-400"><CiFilter className='text-lg' />Filter</button>
+                        </div>
                     </div>
                 </div>
 
@@ -126,7 +114,7 @@ const Dashbord = () => {
                         </thead>
 
                         <tbody>
-                            {agencies.map((item) => (
+                            {findObj.map((item) => (
                                 <tr key={item.id} className="border-b border-gray-500/30">
                                     <td className="p-3">{item.id}</td>
                                     <td>{item.name}</td>
@@ -153,10 +141,11 @@ const Dashbord = () => {
                             ))}
                         </tbody>
                     </table>
+                <div><p className='text-center text-gray-600 text-2xl'>{notFoundData}</p></div>
                 </div>
             </div>
 
-            
+
         </div>
     );
 }
