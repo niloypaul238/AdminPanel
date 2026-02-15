@@ -1,3 +1,4 @@
+import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -8,7 +9,10 @@ const Login = () => {
         username:"",
         password:""
     })
-
+    const [typeCheck,setTypeCheck] = useState('password')
+    const eyeSHowHide = () => {
+        typeCheck == "password" ? setTypeCheck('text') : setTypeCheck('password')
+    }
     const changeAble = (e) =>{
         const copy = {...loginUser}
         const targe = e.target.name;
@@ -53,10 +57,10 @@ const Login = () => {
                                 <div>
                                     <label class="text-slate-900 text-sm font-medium mb-2 block">Password</label>
                                     <div class="relative flex items-center">
-                                        <input name="password" onChange={changeAble} type="password" value={loginUser.password} required class="w-full text-slate-900 text-sm border border-slate-300 px-4 py-3 pr-8 rounded-md outline-blue-600" placeholder="Enter password" />
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-4 h-4 absolute right-4 cursor-pointer" viewBox="0 0 128 128">
-                                            <path d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z" data-original="#000000"></path>
-                                        </svg>
+                                        <input name="password" onChange={changeAble} type={typeCheck} value={loginUser.password} required class="w-full text-slate-900 text-sm border border-slate-300 px-4 py-3 pr-8 rounded-md outline-blue-600" placeholder="Enter password" />
+                                        {
+                                            typeCheck == "password" ? <Eye onClick={eyeSHowHide} class="w-4 h-4 absolute right-4 cursor-pointer" /> : <EyeOff onClick={eyeSHowHide} class="w-4 h-4 absolute right-4 cursor-pointer" />
+                                        }
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap items-center justify-between gap-4">
