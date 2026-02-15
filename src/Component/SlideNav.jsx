@@ -71,7 +71,7 @@ const SlideNav = () => {
 
                         <Link onClick={() => setToggle("adminAgency")} className={`slideNabBtn ${toggle == "adminAgency" && "text-[#FF0AB1]"}`} to={'/adminAgency'}><ShieldUser className='text-xl' /><span>Admin Agancy</span></Link>
 
-                        <Link onClick={() => setToggle("coinAgency")} className={`slideNabBtn ${toggle == "/coinAgency" && "text-[#FF0AB1]"}`} to={'/coinAgency'}><CircleDollarSign className='text-xl' /><span>Coin Agancy</span></Link>
+                        <Link onClick={() => setToggle("coinAgency")} className={`slideNabBtn ${toggle == "coinAgency" && "text-[#FF0AB1]"}`} to={'/coinAgency'}><CircleDollarSign className='text-xl' /><span>Coin Agancy</span></Link>
 
                         <Link onClick={() => setToggle("support")} className={`slideNabBtn ${toggle == "support" && "text-[#FF0AB1]"}`} to={'/support'}><Headset className='text-xl' /><span>Support</span></Link>
 

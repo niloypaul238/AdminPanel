@@ -1892,6 +1892,100 @@ export const userData = [
 ];
 
 
+export const CoinuserData = [
+  {
+    userID: "H002",
+    userName: "Robert Chen",
+    gender: 'Male',
+    referenceId: "REF002",
+    nid: "2345678901",
+    emiil: 'robert.c@example.com',
+    phone: '+12125550198',
+    ipAdress: '192.168.1.2',
+    facebook: "robert.chen.7",
+    google: "rchen.dev@gmail.com",
+    location: "San Francisco, USA",
+    level: "Level 2",
+    status: "Active"
+  },
+  {
+    userID: "H003",
+    userName: "Elena Rodriguez",
+    gender: 'Female',
+    referenceId: "REF003",
+    nid: "3456789012",
+    emiil: 'elena.rod@example.com',
+    phone: '+34912345678',
+    ipAdress: '192.168.1.3',
+    facebook: "elena.rodriguez.official",
+    google: "erodriguez@gmail.com",
+    location: "Madrid, Spain",
+    level: "Level 3",
+    status: "Temp Ban"
+  },
+  {
+    userID: "H004",
+    userName: "Kofi Mensah",
+    gender: 'Male',
+    referenceId: "REF004",
+    nid: "4567890123",
+    emiil: 'kofi.m@example.com',
+    phone: '+233244123456',
+    ipAdress: '192.168.1.4',
+    facebook: "kofi.mensah.92",
+    google: "kmensah@gmail.com",
+    location: "Accra, Ghana",
+    level: "Level 1",
+    status: "Active"
+  },
+  {
+    userID: "H005",
+    userName: "Yuki Tanaka",
+    gender: 'Female',
+    referenceId: "REF005",
+    nid: "5678901234",
+    emiil: 'yuki.t@example.com',
+    phone: '+81301234567',
+    ipAdress: '192.168.1.5',
+    facebook: "yuki.tanaka.jp",
+    google: "ytanaka@gmail.com",
+    location: "Tokyo, Japan",
+    level: "Level 4",
+    status: "Active"
+  },
+  {
+    userID: "H006",
+    userName: "Liam O'Connor",
+    gender: 'Male',
+    referenceId: "REF006",
+    nid: "6789012345",
+    emiil: 'liam.oc@example.com',
+    phone: '+35316123456',
+    ipAdress: '192.168.1.6',
+    facebook: "liam.oconnor.dub",
+    google: "loconnor@gmail.com",
+    location: "Dublin, Ireland",
+    level: "Level 2",
+    status: "Temp Ban"
+  },
+  {
+    userID: "H007",
+    userName: "Amira Al-Farsi",
+    gender: 'Female',
+    referenceId: "REF007",
+    nid: "7890123456",
+    emiil: 'amira.f@example.com',
+    phone: '+97142345678',
+    ipAdress: '192.168.1.7',
+    facebook: "amira.farsi",
+    google: "afarsi@gmail.com",
+    location: "Dubai, UAE",
+    level: "Level 5",
+    status: "Active"
+  }
+];
+
+
 export const streamers = [
   {
     id: 1,
